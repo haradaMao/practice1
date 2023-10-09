@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!-- フラグメントの場所　：：　フラグメント名（要素） -->
+<!-- lang="en"は不要に。layout側で書かれているため -->
+<!-- ~{this(このページの) :: title（渡すもの）}はフラグメント記法 -->
+<!-- thishaは省略可能 -->
+<html th:replace="~{fragments/layout :: layout(~{::title}, ~{::body})}">
+<head>
+<!-- <meta charset="UTF-8">もlayoutに書かれているので不要 -->
+<title>トップページ | 課題管理アプリケーション</title>
+</head>
+<body>
+    <!-- class="mt-3"　BootStrapのスペーシング機能　Margin Top 0~5-->
+    <h1 class="mt-3">課題管理アプリケーション</h1>
+    <!--リストを作る時はulで囲む-->
+    <ul>
+        <!--項目はli-->
+        <li>
+            <!-- このクラスから見た飛ばしたいページのリンクを入れる -->
+            <!-- 同じ部分は./で省略してよい -->
+            <!-- th:hrefは手前のhref="./issues/list.html" を書き換える -->
+            <!--@はタイムリーフでリンクを表すときの基本-->
+            <!--ナチュラルテンプレート："@{/issues}"これがあるおかげでlocalhost:8080/issuesに飛ぶってこと -->
+            <a href="./issues/list.html" th:href="@{/issues}">課題一覧</a>
+        </li>
+    </ul>
+</body>
+</html>
+

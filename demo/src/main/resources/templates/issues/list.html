@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!-- フラグメントの場所　：：　フラグメント名（要素） -->
+<!-- lang="en"は不要に。layout側で書かれているため -->
+<!-- ~{this(このページの) :: title（渡すもの）}はフラグメント記法 -->
+<!-- thishaは省略可能 -->
+<html th:replace="~{fragments/layout :: layout(~{::title}, ~{::body})}">
+<head>
+    <!-- <meta charset="UTF-8"> -->
+    <title>課題一覧 | 課題管理アプリケーション</title>
+</head>
+<body>
+    <h1 class="mt-3">課題一覧</h1>
+    <!-- トップページに戻るためのリンク -->
+    <!-- index.htmlの方に説明あり -->
+    <!-- ../ 一つ上の時はこれ使う -->
+    <a href="../index.html" th:href="@{/}">トップページ</a>
+    <!-- ./ 同じファイルの時はこれ使う -->
+    <!-- IssueController内のshowCreationForm()のreturnと同じ -->
+    <!-- resources/templatesからの相対パス -->
+    <a href="./creationForm" th:href="@{/issues/creationForm}">作成</a>
+    <!-- BootStrapテーブル指定 -->
+    <table class="table">
+        <!--テーブルのヘッダー-->
+        <thead>
+            <!--その中でテーブルの行-->
+            <tr>
+                <!--その中で列-->
+                <th>#</th>
+                <th>概要</th>
+            </tr>
+        </thead>
+        <!--テーブルのボディ-->
+        <tbody>
+            <!--${issueList}はIssueControllerでModelに渡したもの-->
+            <!--issueListからissueを一件ずつ(each)取ってくる-->
+            <!--多分issueの名前は何でもいいやつ i的な-->
+            <tr th:each="issue : ${issueList}">
+                <!--${issue.id}は上で1こずつ取り出したissueの中のさらにidを取り出す-->
+                <!--th;:textはタグ（今回はthタグ）の中身を置き換えるメソッド-->
+                <!--なので今回タグの中は何も書かなくてOK-->
+                <th th:text="${issue.id}">(id)</th>
+                <td>
+                    <!-- th:textはタグ内に文字を入れる -->
+                    <a href="./detail.html" th:href="@{/issues/{issueId}(issueId=${issue.id})}" th:text="${issue.summary}">
+                        (summary)
+                    </a>
+                </td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+</body>
+</html>
